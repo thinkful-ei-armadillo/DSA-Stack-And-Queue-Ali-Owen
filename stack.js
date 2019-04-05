@@ -15,16 +15,16 @@ class Stack {
     } else {
       let popNode = this.top;
       this.top = this.top.next;
-      return popNode;
+      return popNode.data;
     }
   }
   push(data) {
     if (!this.top) {
       this.top = new _Node(data, null);
-    } else {
-      let newNode = new _Node(data, this.top);
-      this.top = newNode;
+      return this.top;
     }
+    let newNode = new _Node(data, this.top);
+    this.top = newNode;
   }
 }
 
@@ -35,7 +35,10 @@ starTrek.push("McCoy");
 starTrek.push("Scotty");
 
 const peek = stack => {
-  return stack.top;
+  if (stack.top) {
+    return stack.top;
+  }
+  return null;
 };
 
 const isEmpty = stack => {
@@ -145,36 +148,30 @@ const sortStack = function(inputStack) {
   let tempStack = new Stack();
 
   while (inputStack.top) {
-    let temp = inputStack.pop().data;
-    if (!tempStack.top) {
-      tempStack.push(temp);
-    } else {
-      if (peek(inputStack).data > temp) {
-        tempStack.push(temp);
-      } else if (peek(inputStack).data < temp) {
-        inputStack.push(tempStack.pop().data);
-        tempStack.push(temp);
-      }
+    let temp = inputStack.pop();
+    while (tempStack.top && peek(tempStack).data < temp) {
+      inputStack.push(tempStack.pop());
     }
+    tempStack.push(temp);
   }
   while (tempStack.top) {
-    inputStack.push(tempStack.pop().data);
+    inputStack.push(tempStack.pop());
   }
   return inputStack;
 };
 
 function main() {
   let numbers = new Stack();
-  numbers.push("1");
-  numbers.push("2");
-  numbers.push("7");
-  // numbers.push("7");
   numbers.push("6");
-  numbers.push("8"); // StackTop-> Bottom: 8, 6, 7, 2, 1
+  numbers.push("7");
+  numbers.push("0");
+  numbers.push("7");
+  numbers.push("8");
+  numbers.push("1"); // StackTop-> Bottom: 1, 8, 0, 7, 6
   console.log("Before Sort");
   display(numbers);
   console.log("After Sort");
-  display(sortStack(numbers));
+  display(sortStack(numbers)); // Expected: StackTop -> 8, 7, 6, 1, 0
 }
 
 main();
