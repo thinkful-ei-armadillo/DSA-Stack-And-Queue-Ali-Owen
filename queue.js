@@ -48,16 +48,24 @@ function display(queue) {
     current = current.next;
   }
 }
-function main() {
-  let starTrekQ = new Queue();
-  starTrekQ.enqueue("Kirk");
-  starTrekQ.enqueue("Spock");
-  starTrekQ.enqueue("Uhura");
-  starTrekQ.enqueue("Chekov");
-
-  starTrekQ.dequeue();
-  starTrekQ.dequeue();
-  console.log("Space before");
-  display(starTrekQ);
+function ophidianDequeue(queue) {
+  let random = Math.floor(Math.random() * 4 + 1);
+  if (random === 1) {
+    queue.enqueue(queue.dequeue());
+  } else {
+    queue.dequeue();
+  }
 }
-//main();
+
+function main() {
+  //   let starTrekQ = new Queue();
+  //   starTrekQ.enqueue("Kirk");
+  //   starTrekQ.enqueue("Spock");
+  //   starTrekQ.enqueue("Uhura");
+  //   starTrekQ.enqueue("Chekov");
+  //   starTrekQ.dequeue();
+  //   starTrekQ.dequeue();
+  //   console.log("Space before");
+  //   display(starTrekQ);
+}
+main();
