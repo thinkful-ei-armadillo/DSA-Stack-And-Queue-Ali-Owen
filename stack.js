@@ -149,9 +149,9 @@ const sortStack = function(inputStack) {
     if (!tempStack.top) {
       tempStack.push(temp);
     } else {
-      if (peek(inputStack) > temp) {
+      if (peek(inputStack).data > temp) {
         tempStack.push(temp);
-      } else if (peek(inputStack) < temp) {
+      } else if (peek(inputStack).data < temp) {
         inputStack.push(tempStack.pop().data);
         tempStack.push(temp);
       }
