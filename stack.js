@@ -11,7 +11,7 @@ class Stack {
   }
   pop() {
     if (!this.top) {
-      return new Error('nothing in stack');
+      return new Error("nothing in stack");
     } else {
       let popNode = this.top;
       this.top = this.top.next;
@@ -29,10 +29,10 @@ class Stack {
 }
 
 let starTrek = new Stack();
-starTrek.push('Kirk');
-starTrek.push('Spock');
-starTrek.push('McCoy');
-starTrek.push('Scotty');
+starTrek.push("Kirk");
+starTrek.push("Spock");
+starTrek.push("McCoy");
+starTrek.push("Scotty");
 
 const peek = stack => {
   return stack.top;
@@ -57,14 +57,14 @@ starTrek.pop();
 
 // problem 3 Palindromes
 function is_palindrome(s) {
-  s = s.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
+  s = s.toLowerCase().replace(/[^a-zA-Z0-9]/g, "");
   let palStack = new Stack();
 
   for (i in s) {
     palStack.push(s.charAt(i));
   }
 
-  let sReverse = '';
+  let sReverse = "";
 
   for (i = 0; i < s.length; i++) {
     sReverse += palStack.pop().data;
@@ -81,7 +81,7 @@ const delimiterCheck = str => {
   let stack = new Stack();
 
   for (let i = 0; i < str.length; i++) {
-    if (str.charAt(i) === '(' || str.charAt(i) === ')') {
+    if (str.charAt(i) === "(" || str.charAt(i) === ")") {
       stack.push(str.charAt(i));
     }
   }
@@ -92,10 +92,10 @@ const delimiterCheck = str => {
 
   while (curr !== null) {
     let poppedItem = stack.pop().data;
-    if (poppedItem === '(') {
+    if (poppedItem === "(") {
       openParen++;
     }
-    if (poppedItem === ')') {
+    if (poppedItem === ")") {
       closeParen++;
     }
     curr = curr.next;
@@ -113,7 +113,7 @@ const delimiterCheck = str => {
   if (closeParen > openParen) {
     while (closeParen !== counter) {
       for (i in str) {
-        if (str.charAt(i) === ')') {
+        if (str.charAt(i) === ")") {
           counter++;
         }
         if (counter === closeParen) {
@@ -124,7 +124,7 @@ const delimiterCheck = str => {
   } else if (openParen > closeParen) {
     while (closeParen !== counter) {
       for (i in str) {
-        if (str.charAt(i) === '(') {
+        if (str.charAt(i) === "(") {
           counter++;
         }
         if (counter === openParen) {
@@ -137,9 +137,44 @@ const delimiterCheck = str => {
   }
 };
 
-let arith = '(1+2)()()()()()()()*6+10';
-// stack ))(
+// let arith = "(1+2)()()()()()()()*6+10";
 
-// closeP = 2, openP = 1
+// console.log(delimiterCheck(arith));
 
-console.log(delimiterCheck(arith));
+const sortStack = function(inputStack) {
+  let tempStack = new Stack();
+
+  while (inputStack.top) {
+    let temp = inputStack.pop().data;
+    if (!tempStack.top) {
+      tempStack.push(temp);
+    } else {
+      if (peek(inputStack) > temp) {
+        tempStack.push(temp);
+      } else if (peek(inputStack) < temp) {
+        inputStack.push(tempStack.pop().data);
+        tempStack.push(temp);
+      }
+    }
+  }
+  while (tempStack.top) {
+    inputStack.push(tempStack.pop().data);
+  }
+  return inputStack;
+};
+
+function main() {
+  let numbers = new Stack();
+  numbers.push("1");
+  numbers.push("2");
+  numbers.push("7");
+  // numbers.push("7");
+  numbers.push("6");
+  numbers.push("8"); // StackTop-> Bottom: 8, 6, 7, 2, 1
+  console.log("Before Sort");
+  display(numbers);
+  console.log("After Sort");
+  display(sortStack(numbers));
+}
+
+main();
